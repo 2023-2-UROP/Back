@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-TEMPLATE_DIR = os.path.join(BASE_DIR, 'template')
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'main/template')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-u8k6cu%7@nsl9i*a%7$a%q2&ot8i_yb_2rp*vxxz&j0u5nw28w
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    ".ap-northeast-2.compute.amazonaws.com"
+    ".ap-northeast-2.compute.amazonaws.com",
+    "127.0.0.1"
 ]
 
 

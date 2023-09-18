@@ -25,22 +25,21 @@ SECRET_KEY = 'django-insecure-u8k6cu%7@nsl9i*a%7$a%q2&ot8i_yb_2rp*vxxz&j0u5nw28w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = [
-#     ".ap-northeast-2.compute.amazonaws.com"
-# ]
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    ".ap-northeast-2.compute.amazonaws.com"
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'main',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mysite'
 ]
 
 MIDDLEWARE = [

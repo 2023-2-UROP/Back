@@ -4,6 +4,7 @@ from django.http import JsonResponse  # Django의 JsonResponse 클래스
 from django.views import View  # Django의 View 클래스
 from django.core.exceptions import ValidationError  # Django의 예외 클래스
 from django.db.models import Q  # Django의 쿼리 생성기
+from algorithm import sudoku_solver, sudoku_maker
 
 import my_settings
 from .models import Account  # 같은 디렉토리의 models.py에서 Account 모델을 가져옴

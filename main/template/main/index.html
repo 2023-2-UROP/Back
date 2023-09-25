@@ -7,5 +7,20 @@
 </head>
 <body>
     <h1>Django</h1>
+
+    <button id="solve-button">Solve Sudoku</button>
+    <div id="result"></div>
+
+    <script>
+    document.getElementById('solve-button').addEventListener('click', function() {
+        fetch('/solve/', {
+            method: 'GET',
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('result').innerText = data.result;
+        });
+    });
+    </script>
 </body>
 </html>

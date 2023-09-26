@@ -2,31 +2,13 @@
 using namespace std;
 int grid[9][9];
 
-void printGrid()
-{
-    int row, col;
-
-    printf("\n┌──────────┬───────────┬──────────┐\n");
-    for (row = 0; row < 9; row++)
-    {
-        printf("│");
-        for (col = 0; col < 9; col++)
-        {
-            printf(" %d ", grid[row][col]);
-
-            if (col == 2 || col == 5)
-            {
-                printf(" │ ");
-            }
+void printGrid() {
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            cout << grid[i][j] << " ";
         }
-        printf("│\n");
-
-        if (row == 2 || row == 5)
-        {
-            printf("├──────────┼───────────┼──────────┤\n");
-        }
+        cout << endl;
     }
-    printf("└──────────┴───────────┴──────────┘\n\n");
 }
 
 bool isPossible(){
@@ -152,7 +134,7 @@ int main() {
         printf("불가능한 스도쿠 퍼즐입니다.");
     } else {
         if (solve_sudoku(call_count)) {
-            printf("성공!");
+//            printf("성공!");
             printGrid();
             cout << "재귀 함수 호출 횟수: " << call_count << endl;
         } else {

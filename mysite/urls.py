@@ -22,5 +22,6 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('', main_views.index, name="index"),
     path('admin/', admin.site.urls),
-    path('solve/', main_views.solve_sudoku, name='solve_sudoku')
+    path('solve/', main_views.solve_sudoku, name='solve_sudoku'),
+    path('new/', main_views.get_sudoku_arr, name='get_sudoku_arr'),
 ]

@@ -9,6 +9,8 @@ def index(request):
 def get_sudoku_arr(request):
     arr = sudoku_maker.run_make_arr()
     print(request)
+    arr = arr.strip().split("\n")
+    arr = [[int(num) for num in line.split()] for line in arr]
     return JsonResponse({'arr' : arr})
 
 

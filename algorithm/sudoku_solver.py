@@ -2,6 +2,10 @@ import subprocess
 
 def run_cpp_program(input_data):
     try:
+        # 만약 input_data가 리스트 타입이면, 문자열로 변환
+        if isinstance(input_data, list):
+            # 각 배열을 문자열로 변환하고 줄바꿈 문자로 연결
+            input_data = '\n'.join([' '.join(map(str, arr)) for arr in input_data])
         # C++ 코드 컴파일
         # subprocess.run(["g++", "/path/to/cpp/project/ssudo.cpp", "-o", "sudoku_solver"], check=True)
         subprocess.run(["g++", "algorithm/ssudo.cpp", "-o", "sudoku_solver"], check=True)
@@ -19,7 +23,6 @@ def run_cpp_program(input_data):
         return f"C++ compilation failed: {e}"
     except Exception as e:
         return f"An error occurred: {e}"
-
 # if __name__ == "__main__":
 #     print("스도쿠를 입력하세요 (9x9 숫자 배열, 빈 칸은 0으로 표시):")
 #     input_data = ""

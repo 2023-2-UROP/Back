@@ -5,7 +5,7 @@ pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'database-1',
+        'NAME': 'urop-db',
         'USER': 'admin',
         'PASSWORD': 'urop2023',
         'HOST': 'database-1.ccgwtelz3n2i.us-east-1.rds.amazonaws.com',

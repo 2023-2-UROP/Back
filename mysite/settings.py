@@ -28,7 +28,7 @@ SECRET_KEY = my_settings.SECRET['secret']
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "ec2-54-90-91-134.compute-1.amazonaws.com",
+    "ec2-174-129-52-210.compute-1.amazonaws.com",
     # "127.0.0.1"
 ]
 

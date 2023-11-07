@@ -1,5 +1,4 @@
 import subprocess
-
 def run_cpp_program(input_data):
     try:
         # 만약 input_data가 리스트 타입이면, 문자열로 변환

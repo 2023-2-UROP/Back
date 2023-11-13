@@ -29,3 +29,23 @@ class Account(models.Model):
 
     class Meta:
         db_table = 'accounts'
+
+class PlayTime(models.Model):
+    start_time = models.DateTimeField(auto_now_add=True)
+    end_time = models.DateTimeField(null=True, blank=True)
+    # Account 모델과의 일대다 관계 설정
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='playtimes')
+
+    def __str__(self):
+        # end_time이 설정되지 않았다면, 메시지를 반환
+        if not self.end_time:
+            return "not finished yet"
+
+        # 세션의 길이 계산
+        duration = self.end_time - self.start_time
+
+        # duration은 timedelta 객체이므로, 이를 문자열로 변환
+        return str(duration)
+
+    class Meta:
+        db_table = 'playtimes'

@@ -6,11 +6,11 @@ class Account(models.Model):
     # 이메일 필드 (이메일 형식 검사 포함)
     email = models.EmailField()
     # 전화번호 필드, 최대 길이는 25
-    phone = models.CharField(max_length=25)
+    # phone = models.CharField(max_length=25)
     # 비밀번호 필드, 최대 길이는 100
     password = models.CharField(max_length=100)
     # 이름 필드, 최대 길이는 20
-    name = models.CharField(max_length=20)
+    # name = models.CharField(max_length=20)
     # 별명 필드, 최대 길이는 20
     nickname = models.CharField(max_length=20)
     # 계정이 생성된 시각. 자동으로 현재 시각 저장
@@ -23,7 +23,7 @@ class Account(models.Model):
 
     # 객체를 문자열로 표현할 때의 포맷 지정
     def __str__(self):
-        return f'{self.name} : {self.email}'
+        return f'{self.email}'
 
         # 메타데이터 설정. 여기서는 데이터베이스 테이블 이름을 'accounts'로 지정
 

@@ -12,7 +12,7 @@ class Account(models.Model):
     # 이름 필드, 최대 길이는 20
     # name = models.CharField(max_length=20)
     # 별명 필드, 최대 길이는 20
-    nickname = models.CharField(max_length=20)
+    # nickname = models.CharField(max_length=20)
     # 계정이 생성된 시각. 자동으로 현재 시각 저장
     create_at = models.DateTimeField(auto_now_add=True)
     # 계정 정보가 마지막으로 업데이트된 시각. 자동으로 현재 시각 저장
@@ -48,4 +48,4 @@ class PlayTime(models.Model):
         return str(duration)
 
     class Meta:
-        db_table = 'playtimes'
+        db_table = 'playtime'

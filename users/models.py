@@ -37,20 +37,20 @@ class PlayTime(models.Model):
     # Account 모델과의 일대다 관계 설정
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='playtimes')
 
-    def __str__(self):
-        if not self.end_time:
-            return "not finished yet"
-        return str(self.end_time - self.start_time)
-
-    @property
-    def duration(self):
-        # end_time이 설정되지 않았다면 None을 반환
-        if not self.end_time:
-            return None
-
-        # 세션의 길이 (duration) 계산
-        duration = self.end_time - self.start_time
-        return duration
+    # def __str__(self):
+    #     if not self.end_time:
+    #         return "not finished yet"
+    #     return str(self.end_time - self.start_time)
+    #
+    # @property
+    # def duration(self):
+    #     # end_time이 설정되지 않았다면 None을 반환
+    #     if not self.end_time:
+    #         return None
+    #
+    #     # 세션의 길이 (duration) 계산
+    #     duration = self.end_time - self.start_time
+    #     return duration
 
     class Meta:
         db_table = 'playtime'

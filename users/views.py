@@ -149,23 +149,16 @@ class RankingView(View):
                 account = Account.objects.get(Q(email=email))
                 # 관련된 PlayTime 데이터 조회
                 play_times = PlayTime.objects.filter(Q(account_id=account.id))
-                # durations = []
-                # for play_time in play_times:
-                #     if play_time.end_time and play_time.start_time:
-                #         duration = play_time.end_time - play_time.start_time
-                #         durations.append(duration.total_seconds())  # 초 단위로 변환
-                durations = PlayTime.objects.filter(Q(play_times))
-                # durations = [play_time.duration for play_time in play_times if play_time.duration is not None]
 
-
-
-                # JSON 형식으로 변환하여 반환
+                durations = [play_time.duration for play_time in play_times if play_time.duration is not None]
                 return JsonResponse({'durations': durations}, status=200)
+            else:
+                return JsonResponse({'message': 'ACCOUNT_NOT_FOUND'}, status=404)
 
         except KeyError:
             return JsonResponse({"message": "KEY_ERROR"}, status=400)
         except ObjectDoesNotExist:
-            return JsonResponse({"message": "ACCOUNT_NOT_FOUND"}, status=404)
+            return JsonResponse({"message": "ACCOUNT_NOT"}, status=404)
         except Exception as e:
             return JsonResponse({"message": str(e)}, status=500)
 

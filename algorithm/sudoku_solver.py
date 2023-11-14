@@ -22,27 +22,27 @@ def run_cpp_program(input_data):
         return f"C++ compilation failed: {e}"
     except Exception as e:
         return f"An error occurred: {e}"
-# if __name__ == "__main__":
-#     print("스도쿠를 입력하세요 (9x9 숫자 배열, 빈 칸은 0으로 표시):")
-#     input_data = ""
-#     for _ in range(9):
-#         input_row = input()
-#         input_data += input_row + "\n"
-#
-#     result = run_cpp_program(input_data)
-#     print(result)
+if __name__ == "__main__":
+    print("스도쿠를 입력하세요 (9x9 숫자 배열, 빈 칸은 0으로 표시):")
+    input_data = ""
+    for _ in range(9):
+        input_row = input()
+        input_data += input_row + "\n"
 
-# if __name__ == "__main__":
-#     print("스도쿠를 입력하세요 (9x9 숫자 배열, 빈 칸은 0으로 표시):")
-#
-#     sudoku_list = []
-#     for _ in range(9):
-#         input_row = input()
-#         int_row = list(map(int, input_row.split()))
-#         sudoku_list.append(int_row)
-#
-#     # 2차원 리스트를 다시 문자열로 변환하여 C++ 프로그램에 입력으로 전달
-#     input_data = "\n".join([" ".join(map(str, row)) for row in sudoku_list]) + "\n"
-#
-#     result = run_cpp_program(input_data)
-#     print(result)
+    result = run_cpp_program(input_data)
+    print(result)
+
+if __name__ == "__main__":
+    print("스도쿠를 입력하세요 (9x9 숫자 배열, 빈 칸은 0으로 표시):")
+
+    sudoku_list = []
+    for _ in range(9):
+        input_row = input()
+        int_row = list(map(int, input_row.split()))
+        sudoku_list.append(int_row)
+
+    # 2차원 리스트를 다시 문자열로 변환하여 C++ 프로그램에 입력으로 전달
+    input_data = "\n".join([" ".join(map(str, row)) for row in sudoku_list]) + "\n"
+
+    result = run_cpp_program(input_data)
+    print(result)

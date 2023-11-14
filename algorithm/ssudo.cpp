@@ -128,7 +128,7 @@ int main() {
         }
     }
 
-    cout << "채워진 셀의 수: " << filled << endl;
+//    cout << "채워진 셀의 수: " << filled << endl;
 
     if (!isPossible()) {
         printf("불가능한 스도쿠 퍼즐입니다.");
@@ -136,7 +136,7 @@ int main() {
         if (solve_sudoku(call_count)) {
 //            printf("성공!");
             printGrid();
-            cout << "재귀 함수 호출 횟수: " << call_count << endl;
+//            cout << "재귀 함수 호출 횟수: " << call_count << endl;
         } else {
             printf("실패!");
         }

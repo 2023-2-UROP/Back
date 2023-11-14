@@ -135,56 +135,25 @@ class LoginView(View):
             return JsonResponse({"message": "KEY_ERROR"}, status=400)
 
 
-# class RankingView(View):
-#     def post(self, request):
-#         try:
-#             data = json.loads(request.body)  # JSON 데이터 로드
-#             email = data.get('email')
-#
-#             if not email:
-#                 return JsonResponse({'message': 'KEY_ERROR'}, status=400)
-#
-#             # 이메일을 사용하여 Account 모델에서 사용자 조회
-#             if Account.objects.filter(Q(email=email)).exists():
-#                 account = Account.objects.get(Q(email=email))
-#
-#             # 관련된 PlayTime 데이터 조회
-#                 play_times = PlayTime.objects.filter(Q(account=account))
-#
-#                 # 각 PlayTime 인스턴스에 대한 duration 계산
-#                 # durations = [play_time.duration for play_time in play_times if play_time.duration is not None]
-#                 durations = PlayTime.objects.get(Q(end_time=end_time))
-#
-#                 # JSON 형식으로 변환하여 반환
-#                 return JsonResponse({'durations': durations}, status=200)
-#
-#         except KeyError:
-#             return JsonResponse({"message": "KEY_ERROR"}, status=400)
-#         except ObjectDoesNotExist:
-#             return JsonResponse({"message": "ACCOUNT_NOT_FOUND"}, status=404)
-#         except Exception as e:
-#             return JsonResponse({"message": str(e)}, status=500)
-
-
 class RankingView(View):
     def post(self, request):
         try:
-            data = json.loads(request.body)
+            data = json.loads(request.body)  # JSON 데이터 로드
             email = data.get('email')
 
             if not email:
                 return JsonResponse({'message': 'KEY_ERROR'}, status=400)
 
+            # 이메일을 사용하여 Account 모델에서 사용자 조회
             if Account.objects.filter(Q(email=email)).exists():
                 account = Account.objects.get(Q(email=email))
-                play_times = PlayTime.objects.filter(Q(account=account))
+                # 관련된 PlayTime 데이터 조회
+                play_times = PlayTime.objects.filter(Q(account_id=account.id))
+                durations = [play_time.duration for play_time in play_times if play_time.duration is not None]
 
-                durations = []
-                for play_time in play_times:
-                    if play_time.end_time:
-                        duration = play_time.end_time - play_time.start_time
-                        durations.append(duration.total_seconds())  # 혹은 다른 형식으로 변환
 
+
+                # JSON 형식으로 변환하여 반환
                 return JsonResponse({'durations': durations}, status=200)
 
         except KeyError:
@@ -193,4 +162,5 @@ class RankingView(View):
             return JsonResponse({"message": "ACCOUNT_NOT_FOUND"}, status=404)
         except Exception as e:
             return JsonResponse({"message": str(e)}, status=500)
+
 

@@ -175,9 +175,9 @@ class RankingView(View):
             if not email:
                 return JsonResponse({'message': 'KEY_ERROR'}, status=400)
 
-            if Account.objects.filter(email=email).exists():
-                account = Account.objects.get(email=email)
-                play_times = PlayTime.objects.filter(account=account)
+            if Account.objects.filter(Q(email=email)).exists():
+                account = Account.objects.get(Q(email=email))
+                play_times = PlayTime.objects.filter(Q(account=account))
 
                 durations = []
                 for play_time in play_times:

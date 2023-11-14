@@ -148,7 +148,7 @@ class RankingView(View):
             account = Account.objects.get(email=email)
 
             # 관련된 PlayTime 데이터 조회
-            play_times = PlayTime.objects.filter(account=account)
+            play_times = PlayTime.objects.filter(account_id=account)
 
             # 각 PlayTime 인스턴스에 대한 duration 계산
             durations = [play_time.duration for play_time in play_times if play_time.duration is not None]

@@ -134,6 +134,7 @@ class LoginView(View):
             # KeyError 예외 처리
             return JsonResponse({"message": "KEY_ERROR"}, status=400)
 
+
 class RankingView(View):
     def post(self, request):
         try:

@@ -31,6 +31,7 @@ class Account(models.Model):
         db_table = 'accounts'
 
 class PlayTime(models.Model):
+    objects = None
     start_time = models.DateTimeField(auto_now_add=True)
     end_time = models.DateTimeField(null=True, blank=True)
     # Account 모델과의 일대다 관계 설정

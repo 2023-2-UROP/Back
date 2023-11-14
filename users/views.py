@@ -4,6 +4,8 @@ from django.http import JsonResponse  # Django의 JsonResponse 클래스
 from django.views import View  # Django의 View 클래스
 from django.core.exceptions import ValidationError  # Django의 예외 클래스
 from django.db.models import Q  # Django의 쿼리 생성기
+from .models import Account, PlayTime
+from django.core.exceptions import ObjectDoesNotExist
 from algorithm import sudoku_solver, sudoku_maker
 
 import my_settings
@@ -131,3 +133,31 @@ class LoginView(View):
         except KeyError:
             # KeyError 예외 처리
             return JsonResponse({"message": "KEY_ERROR"}, status=400)
+
+class RankingView(View):
+    def post(self, request):
+        try:
+            data = json.loads(request.body)  # JSON 데이터 로드
+            email = data.get('email')
+
+            if not email:
+                return JsonResponse({'message': 'KEY_ERROR'}, status=400)
+
+            # 이메일을 사용하여 Account 모델에서 사용자 조회
+            account = Account.objects.get(email=email)
+
+            # 관련된 PlayTime 데이터 조회
+            play_times = PlayTime.objects.filter(account=account)
+
+            # 각 PlayTime 인스턴스에 대한 duration 계산
+            durations = [play_time.duration for play_time in play_times if play_time.duration is not None]
+
+            # JSON 형식으로 변환하여 반환
+            return JsonResponse({'durations': durations}, status=200)
+
+        except KeyError:
+            return JsonResponse({"message": "KEY_ERROR"}, status=400)
+        except ObjectDoesNotExist:
+            return JsonResponse({"message": "ACCOUNT_NOT_FOUND"}, status=404)
+        except Exception as e:
+            return JsonResponse({"message": str(e)}, status=500)

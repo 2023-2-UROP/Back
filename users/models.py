@@ -37,15 +37,19 @@ class PlayTime(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='playtimes')
 
     def __str__(self):
-        # end_time이 설정되지 않았다면, 메시지를 반환
         if not self.end_time:
             return "not finished yet"
+        return str(self.end_time - self.start_time)
 
-        # 세션의 길이 계산
+    @property
+    def duration(self):
+        # end_time이 설정되지 않았다면 None을 반환
+        if not self.end_time:
+            return None
+
+        # 세션의 길이 (duration) 계산
         duration = self.end_time - self.start_time
-
-        # duration은 timedelta 객체이므로, 이를 문자열로 변환
-        return str(duration)
+        return duration
 
     class Meta:
         db_table = 'playtime'

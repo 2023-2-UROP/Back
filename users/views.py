@@ -166,7 +166,7 @@ class LoginView(View):
 #             return JsonResponse({"message": str(e)}, status=500)
 
 
-class Ranking(View):
+class RankingView(View):
     def post(self, request):
         try:
             data = json.loads(request.body)

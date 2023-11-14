@@ -145,10 +145,10 @@ class RankingView(View):
                 return JsonResponse({'message': 'KEY_ERROR'}, status=400)
 
             # 이메일을 사용하여 Account 모델에서 사용자 조회
-            account = Account.objects.get(email=email)
+            account = Account.objects.get(Q(email=email))
 
             # 관련된 PlayTime 데이터 조회
-            play_times = PlayTime.objects.filter(account_id=account.id)
+            play_times = PlayTime.objects.filter(Q(account_id=account.id))
 
             # 각 PlayTime 인스턴스에 대한 duration 계산
             durations = [play_time.duration for play_time in play_times if play_time.duration is not None]

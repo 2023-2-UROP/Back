@@ -64,7 +64,7 @@ class SignUpView(View):
             # phone = data.get('phone', None)
 
             # 필수 데이터가 없으면 400 에러 반환
-            if not (password and email and name and phone and nickname):
+            if not (password and email):
                 return JsonResponse({'message': 'KEY_ERROR'}, status=400)
 
             # 유효성 검사
@@ -81,7 +81,7 @@ class SignUpView(View):
             #     return response
 
             # 이미 존재하는 계정인지 검사
-            if Account.objects.filter(Q(email=email) | Q(name=name)).exists():
+            if Account.objects.filter(Q(email=email)).exists():
                 return JsonResponse({'message': 'USER_ALREADY_EXISTS'}, status=409)
 
             # 새 계정 생성

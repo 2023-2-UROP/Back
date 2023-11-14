@@ -40,6 +40,6 @@ class PlayTime(models.Model):
 
 
     def __str__(self):
-        return f'{self.duration}'
+        return f'{self.start_time}, {self.end_time}, {self.duration}'
     class Meta:
         db_table = 'playtime'

@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError  # Django의 예외 클래스
 from django.db.models import Q  # Django의 쿼리 생성기
 from .models import Account, PlayTime
 from django.core.exceptions import ObjectDoesNotExist
-from algorithm import sudoku_solver, sudoku_maker
+import datetime
 
 import my_settings
 from .models import Account  # 같은 디렉토리의 models.py에서 Account 모델을 가져옴
@@ -133,6 +133,42 @@ class LoginView(View):
         except KeyError:
             # KeyError 예외 처리
             return JsonResponse({"message": "KEY_ERROR"}, status=400)
+
+class RankingDB(View):
+    def post(self, request):
+        data = json.loads(request.body)
+        try:
+            email = data.get('email')
+            duration = data.get('duration')
+
+            # 이메일 유효성 검사
+            valid, response = valid_email(email)
+            if not valid:
+                return response
+
+            # 이메일을 사용하여 Account 모델에서 사용자 조회
+            if Account.objects.filter(Q(email=email)).exists():
+                account = Account.objects.get(Q(email=email))
+
+                # duration 문자열을 datetime 객체로 변환
+                duration_datetime = datetime.datetime.strptime(duration, '%Y-%m-%dT%H:%M:%SZ')
+
+                # PlayTime 인스턴스 생성
+                PlayTime.objects.create(
+                    account_id=account.id,
+                    duration=duration_datetime
+                )
+                return JsonResponse({'message': 'SUCCESS'}, status=200)
+            else:
+                return JsonResponse({'message': 'Account not found'}, status=404)
+
+        except KeyError:
+            return JsonResponse({"message": "KEY_ERROR"}, status=400)
+        except ValueError:
+            return JsonResponse({"message": "Invalid date format"}, status=400)
+        except Exception as e:
+            return JsonResponse({"message": str(e)}, status=500)
+
 
 
 class RankingView(View):

@@ -23,3 +23,5 @@ def solve_sudoku(request):
         result = sudoku_solver.run_cpp_program(arr)
         return JsonResponse({'result': result})
 
+
+

@@ -136,7 +136,7 @@ class LoginView(View):
 
 
 class RankingView(View):
-    def post(self, request):
+    def get(self, request):
         try:
             data = json.loads(request.body)  # JSON 데이터 로드
             email = data.get('email')

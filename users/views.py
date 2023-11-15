@@ -173,8 +173,8 @@ class RankingDB(View):
 
 class RankingView(View):
     def post(self, request):
+        data = json.loads(request.body)  # JSON 데이터 로드
         try:
-            data = json.loads(request.body)  # JSON 데이터 로드
             email = data.get('email')
 
             if not email:

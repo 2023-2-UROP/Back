@@ -151,7 +151,7 @@ class RankingDB(View):
                 account = Account.objects.get(Q(email=email))
 
                 # duration 문자열을 datetime 객체로 변환
-                duration_datetime = datetime.datetime.strptime(duration, '%Y-%m-%dT%H:%M:%SZ')
+                duration_datetime = datetime.datetime.strptime(duration, '%Y-%m-%d %H:%M:%S')
 
                 # PlayTime 인스턴스 생성
                 PlayTime.objects.create(

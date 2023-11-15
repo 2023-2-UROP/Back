@@ -158,7 +158,7 @@ class RankingView(View):
         except KeyError:
             return JsonResponse({"message": "KEY_ERROR"}, status=400)
         except ObjectDoesNotExist:
-            return JsonResponse({"message": "ACCOUNT_NOT"}, status=404)
+            return JsonResponse({"message": "ACCOUNT_NOT"}, status=403)
         except Exception as e:
             return JsonResponse({"message": str(e)}, status=500)
 

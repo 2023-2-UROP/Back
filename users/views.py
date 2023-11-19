@@ -8,7 +8,6 @@ from django.core.exceptions import ObjectDoesNotExist
 import datetime
 
 import my_settings
-from .models import Account  # 같은 디렉토리의 models.py에서 Account 모델을 가져옴
 
 # 패스워드의 최소 길이를 전역 변수로 설정
 minimum_password_length = 8
@@ -186,7 +185,7 @@ class RankingView(View):
                 play_times = PlayTime.objects.filter(Q(account_id=account.id))
 
                 durations = sorted([play_time.duration.strftime('%H:%M:%S') for play_time in play_times if play_time.duration is not None])[:5]
-                return JsonResponse({'durations': durations}, status=200)
+                return JsonResponse({'durations': durations, 'email': email}, status=200)
             else:
                 return JsonResponse({'message': 'ACCOUNT_NOT_FOUND'}, status=404)
 

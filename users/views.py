@@ -4,6 +4,8 @@ from django.http import JsonResponse  # Django의 JsonResponse 클래스
 from django.views import View  # Django의 View 클래스
 from django.db.models import Q  # Django의 쿼리 생성기
 from .models import Account, PlayTime
+from django.db.models import Min
+from django.db.models.functions import Trunc
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
 
@@ -196,37 +198,34 @@ class RankingView(View):
         except Exception as e:
             return JsonResponse({"message": str(e)}, status=500)
 
+
 class Ranking_all_View(View):
     def post(self, request):
-        data = json.loads(request.body)
         try:
-            email = data.get('email')
+            # 각 유저별로 가장 짧은 duration을 찾음
+            shortest_durations_per_user = PlayTime.objects.annotate(
+                shortest_duration=Min('duration')
+            ).values('account_id', 'shortest_duration')
 
-            if not email:
-                return JsonResponse({'message': 'KEY_ERROR'}, status=400)
+            # 전체에서 가장 짧은 상위 5개의 durations을 가진 유저 선택
+            top_users = (
+                shortest_durations_per_user
+                .order_by('shortest_duration')[:5]
+                .annotate(
+                    duration_str=Trunc('shortest_duration', 'second')
+                )
+            )
 
-            if Account.objects.filter(Q(email=email)).exists():
-                account = Account.objects.get(Q(email=email))
+            result = [
+                {
+                    'account_id': user['account_id'],
+                    'duration': user['duration_str'].strftime('%H:%M:%S')
+                } for user in top_users
+            ]
 
-                # 유저별로 PlayTime 데이터 조회 및 상위 5개 선택
-                play_times = PlayTime.objects.filter(Q(account_id=account.id)).order_by('duration')[:5]
+            return JsonResponse({'top_users': result}, status=200)
 
-                # durations = [play_time.duration.strftime('%H:%M:%S') for play_time in play_times]
-                durations = [
-                                play_time.duration.strftime('%H:%M:%S')
-                                for play_time in play_times
-                                if play_time.duration is not None
-                            ][:5]
-                return JsonResponse({'durations': durations, 'email': email}, status=200)
-            else:
-                return JsonResponse({'message': 'ACCOUNT_NOT_FOUND'}, status=404)
-
-        except KeyError:
-            return JsonResponse({"message": "KEY_ERROR"}, status=400)
-        except ObjectDoesNotExist:
-            return JsonResponse({"message": "ACCOUNT_NOT"}, status=403)
         except Exception as e:
             return JsonResponse({"message": str(e)}, status=500)
-
 
 

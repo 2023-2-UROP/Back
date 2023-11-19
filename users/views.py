@@ -211,7 +211,12 @@ class Ranking_all_View(View):
                 # 유저별로 PlayTime 데이터 조회 및 상위 5개 선택
                 play_times = PlayTime.objects.filter(Q(account_id=account.id)).order_by('duration')[:5]
 
-                durations = [play_time.duration.strftime('%H:%M:%S') for play_time in play_times]
+                # durations = [play_time.duration.strftime('%H:%M:%S') for play_time in play_times]
+                durations = [
+                                play_time.duration.strftime('%H:%M:%S')
+                                for play_time in play_times
+                                if play_time.duration is not None
+                            ][:5]
                 return JsonResponse({'durations': durations, 'email': email}, status=200)
             else:
                 return JsonResponse({'message': 'ACCOUNT_NOT_FOUND'}, status=404)

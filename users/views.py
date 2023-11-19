@@ -185,7 +185,7 @@ class RankingView(View):
                 # 관련된 PlayTime 데이터 조회
                 play_times = PlayTime.objects.filter(Q(account_id=account.id))
 
-                durations = [play_time.duration.strftime('%H:%M:%S') for play_time in play_times if play_time.duration is not None]
+                durations = sorted([play_time.duration.strftime('%H:%M:%S') for play_time in play_times if play_time.duration is not None])[:5]
                 return JsonResponse({'durations': durations}, status=200)
             else:
                 return JsonResponse({'message': 'ACCOUNT_NOT_FOUND'}, status=404)

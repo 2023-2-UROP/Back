@@ -2,7 +2,6 @@ from django.shortcuts import render
 import json, re, traceback, bcrypt, jwt  # 각종 Python 라이브러리
 from django.http import JsonResponse  # Django의 JsonResponse 클래스
 from django.views import View  # Django의 View 클래스
-from django.core.exceptions import ValidationError  # Django의 예외 클래스
 from django.db.models import Q  # Django의 쿼리 생성기
 from .models import Account, PlayTime
 from django.core.exceptions import ObjectDoesNotExist
@@ -122,7 +121,7 @@ class LoginView(View):
                     # JWT 토큰 생성
                     token = jwt.encode({'email': email}, my_settings.SECRET['secret'], algorithm='HS256')
                     # 토큰을 클라이언트에 반환
-                    return JsonResponse({'message': 'SUCCESS', 'token': token}, status=200)
+                    return JsonResponse({'message': 'SUCCESS', 'token': token, 'email': email}, status=200)
 
                 # 비밀번호가 틀린 경우
                 return JsonResponse({"message": "INVALID_PASSWORD"}, status=401)

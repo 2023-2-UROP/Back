@@ -7,4 +7,5 @@ urlpatterns = [
     path('ranking', RankingView.as_view()),
     path('rankingDB', RankingDB.as_view()),
     path('ranking_all', Ranking_all_View.as_view()),
+
 ]

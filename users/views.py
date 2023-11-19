@@ -196,4 +196,32 @@ class RankingView(View):
         except Exception as e:
             return JsonResponse({"message": str(e)}, status=500)
 
+class Ranking_all_View(View):
+    def post(self, request):
+        data = json.loads(request.body)
+        try:
+            email = data.get('email')
+
+            if not email:
+                return JsonResponse({'message': 'KEY_ERROR'}, status=400)
+
+            if Account.objects.filter(Q(email=email)).exists():
+                account = Account.objects.get(Q(email=email))
+
+                # 유저별로 PlayTime 데이터 조회 및 상위 5개 선택
+                play_times = PlayTime.objects.filter(Q(account_id=account.id)).order_by('duration')[:5]
+
+                durations = [play_time.duration.strftime('%H:%M:%S') for play_time in play_times]
+                return JsonResponse({'durations': durations, 'email': email}, status=200)
+            else:
+                return JsonResponse({'message': 'ACCOUNT_NOT_FOUND'}, status=404)
+
+        except KeyError:
+            return JsonResponse({"message": "KEY_ERROR"}, status=400)
+        except ObjectDoesNotExist:
+            return JsonResponse({"message": "ACCOUNT_NOT"}, status=403)
+        except Exception as e:
+            return JsonResponse({"message": str(e)}, status=500)
+
+
 

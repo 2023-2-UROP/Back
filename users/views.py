@@ -200,32 +200,32 @@ class RankingView(View):
 
 
 class Ranking_all_View(View):
-    def post(self, request):
-        try:
-            # 각 유저별로 가장 짧은 duration을 찾음
-            shortest_durations_per_user = PlayTime.objects.annotate(
-                shortest_duration=Min('duration')
-            ).values('account_id', 'shortest_duration')
+    class Ranking_all_View(View):
+        def post(self, request):
+            try:
+                # 각 유저별로 가장 짧은 duration과 관련된 Account 정보를 함께 찾음
+                shortest_durations_per_user = PlayTime.objects.select_related('account').annotate(
+                    shortest_duration=Min('duration')
+                ).values('account_id', 'account__email', 'shortest_duration')
 
-            # 전체에서 가장 짧은 상위 5개의 durations을 가진 유저 선택
-            top_users = (
-                shortest_durations_per_user
-                .order_by('shortest_duration')[:5]
-                .annotate(
-                    duration_str=Trunc('shortest_duration', 'second')
+                # 전체에서 가장 짧은 상위 5개의 durations을 가진 유저 선택
+                top_users = (
+                    shortest_durations_per_user
+                    .order_by('shortest_duration')[:5]
+                    .annotate(duration_str=Trunc('shortest_duration', 'second'))
                 )
-            )
 
-            result = [
-                {
-                    'account_id': user['account_id'],
-                    'duration': user['duration_str'].strftime('%H:%M:%S')
-                } for user in top_users
-            ]
+                result = [
+                    {
+                        'account_id': user['account_id'],
+                        'email': user['account__email'],
+                        'duration': user['duration_str'].strftime('%H:%M:%S')
+                    } for user in top_users
+                ]
 
-            return JsonResponse({'top_users': result}, status=200)
+                return JsonResponse({'top_users': result}, status=200)
 
-        except Exception as e:
-            return JsonResponse({"message": str(e)}, status=500)
+            except Exception as e:
+                return JsonResponse({"message": str(e)}, status=500)
 
 

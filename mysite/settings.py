@@ -45,8 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'corsheaders',
-    'channels',
-    'ar',
 ]
 
 MIDDLEWARE = [
@@ -79,12 +77,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
-
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels,layers.InMemoryChannelLayer"
-    }
-}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

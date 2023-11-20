@@ -205,7 +205,7 @@ class Ranking_all_View(View):
             # 각 유저별로 가장 짧은 duration과 관련된 Account 정보를 함께 찾음
             shortest_durations_per_user = PlayTime.objects.select_related('account').annotate(
                 shortest_duration=Min('duration')
-            ).values('account_id', 'account__email', 'shortest_duration')
+            ).values('account__email', 'shortest_duration')
 
             # 전체에서 가장 짧은 상위 5개의 durations을 가진 유저 선택
             top_users = (
@@ -216,7 +216,6 @@ class Ranking_all_View(View):
 
             result = [
                 {
-                    'account_id': user['account_id'],
                     'email': user['account__email'],
                     'duration': user['duration_str'].strftime('%H:%M:%S')
                 } for user in top_users

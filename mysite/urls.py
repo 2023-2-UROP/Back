@@ -21,6 +21,7 @@ from main import views as main_views
 urlpatterns = [
     path('users/', include('users.urls')),
     path('', main_views.index, name="index"),
+    path('img/', main_views.img_to_arr, name="img_to_arr"),
     path('admin/', admin.site.urls),
     path('solve/', main_views.solve_sudoku, name='solve_sudoku'),
     path('new/', main_views.get_sudoku_arr, name='get_sudoku_arr'),

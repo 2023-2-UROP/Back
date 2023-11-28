@@ -63,11 +63,22 @@ def img_to_arr(request):
                     destination.write(chunk)
 
             # 파일 저장이 완료되면 main.py를 실행합니다.
-            result = subprocess.run(["python", "/Users/zsu/mysite/imgtoarr/main.py"])
+            # result = subprocess.run(["python", "/Users/zsu/mysite/imgtoarr/main.py"])
+            result = subprocess.run(["python", "/Users/zsu/mysite/imgtoarr/main.py"], capture_output=True, text=True)
+
+            # 필요한 정보를 추출하여 딕셔너리로 변환
+            result_dict = {
+                'returncode': result.returncode,
+                'stdout': result.stdout,
+                'stderr': result.stderr
+            }
+
+            # 딕셔너리를 JSON으로 변환
+            result_json = json.dumps(result_dict)
             # result = subprocess.run(["python", "/Users/zsu/PycharmProjects/pythonProject2/imgtoarr/main.py"])
 
             # 성공 응답을 반환합니다.
-            return JsonResponse({'status': 'success' , 'result' : result})
+            return JsonResponse({'status': 'success' , 'result' : result_json})
         except Exception as e:
             # 예외가 발생한 경우 에러 응답을 반환합니다.
             return JsonResponse({'status': 'error', 'message': str(e)})

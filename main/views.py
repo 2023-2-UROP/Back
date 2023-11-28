@@ -1,10 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from algorithm import sudoku_solver, sudoku_maker
-from django.views.decorators.csrf import csrf_exempt
-import base64
-from PIL import Image
-from io import BytesIO
+import subprocess
+
 import json
 def index(request):
     print(request)
@@ -47,16 +45,32 @@ def solve_sudoku(request):
 #     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 
+import subprocess
+
 def img_to_arr(request):
     if request.method == "POST":
         try:
+            # 클라이언트에서 전송한 파일은 'image' 키를 통해 얻을 수 있습니다.
             uploaded_file = request.FILES['image']
-            with open('ar/' + uploaded_file.name, 'wb') as destination:
+
+            # 서버에 저장할 파일 경로를 지정합니다.
+            # 여기서는 'imgtoarr/' 디렉토리에 클라이언트에서 업로드한 파일 이름으로 저장합니다.
+            file_path = 'imgtoarr/' + uploaded_file.name
+
+            # 파일을 바이너리 쓰기 모드로 열고, 업로드된 파일의 데이터를 쓰기합니다.
+            with open(file_path, 'wb') as destination:
                 for chunk in uploaded_file.chunks():
                     destination.write(chunk)
 
-            return JsonResponse({'status': 'success'})
+            # 파일 저장이 완료되면 main.py를 실행합니다.
+            result = subprocess.run(["python", "/Users/zsu/mysite/imgtoarr/main.py"])
+
+            # 성공 응답을 반환합니다.
+            return JsonResponse({'status': 'success' , 'result' : result})
         except Exception as e:
+            # 예외가 발생한 경우 에러 응답을 반환합니다.
             return JsonResponse({'status': 'error', 'message': str(e)})
 
+    # POST 메서드가 아닌 경우에는 잘못된 요청 메시지를 반환합니다.
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+

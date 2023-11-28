@@ -4,7 +4,7 @@ import tensorflow as tf
 
 # 모델 불러오는 함수
 def intializePredectionModel():
-    model = tf.keras.models.load_model('/Users/zsu/mysite/imgtoarr/zz_model.h5')
+    model = tf.keras.models.load_model('imgtoarr/zz_model.h5')
     return model
 # 이미지 전처리 함수
 def preProcess(img):

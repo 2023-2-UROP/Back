@@ -64,6 +64,7 @@ def img_to_arr(request):
 
             # 파일 저장이 완료되면 main.py를 실행합니다.
             result = subprocess.run(["python", "/Users/zsu/mysite/imgtoarr/main.py"])
+            # result = subprocess.run(["python", "/Users/zsu/PycharmProjects/pythonProject2/imgtoarr/main.py"])
 
             # 성공 응답을 반환합니다.
             return JsonResponse({'status': 'success' , 'result' : result})

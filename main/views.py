@@ -68,9 +68,9 @@ def img_to_arr(request):
 
             # 필요한 정보를 추출하여 딕셔너리로 변환
             result_dict = {
-                'returncode': result.returncode,
+                # 'returncode': result.returncode,
                 'stdout': result.stdout,
-                'stderr': result.stderr
+                # 'stderr': result.stderr
             }
 
             # 딕셔너리를 JSON으로 변환

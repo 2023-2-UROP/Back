@@ -41,11 +41,13 @@ def img_to_arr(request):
                     destination.write(chunk)
 
             arr = main.img_make_arr(file_path)
+            arr_list = arr.tolist()
+            arr_list_int = [int(x) for x in arr_list]
 
-            json_res = json.dumps(arr.astype(int).tolist())
+            # json_res = json.dumps(arr.astype(int).tolist())
 
             # 성공 응답을 반환합니다.
-            return JsonResponse({'status': 'success', 'result': json_res})
+            return JsonResponse({'status': 'success', 'result': arr_list_int})
         except Exception as e:
             # 예외가 발생한 경우 에러 응답을 반환합니다.
             return JsonResponse({'status': 'error', 'message': str(e)})

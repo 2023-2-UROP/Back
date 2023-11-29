@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from algorithm import sudoku_solver, sudoku_maker
-from imgtoarr import main, fuction222
-import subprocess
+from imgtoarr import main
 
 import json
 def index(request):

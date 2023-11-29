@@ -42,7 +42,7 @@ def img_to_arr(request):
 
             arr = main.img_make_arr(file_path)
             # arr_list_int = [int(x) for x in arr]
-            arr = arr.strip().split("\n")
+            # arr = arr.strip().split("\n")
             arr = [[int(num) for num in line.split()] for line in arr]
             return JsonResponse({'arr': arr})
         except Exception as e:

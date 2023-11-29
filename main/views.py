@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+import re
 from algorithm import sudoku_solver, sudoku_maker
 import subprocess
 
@@ -44,9 +45,6 @@ def solve_sudoku(request):
 #
 #     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
-
-import subprocess
-
 def img_to_arr(request):
     if request.method == "POST":
         try:
@@ -66,10 +64,12 @@ def img_to_arr(request):
             # result = subprocess.run(["python", "/Users/zsu/mysite/imgtoarr/main.py"])
             result = subprocess.run(["python", "imgtoarr/main.py"], capture_output=True, text=True)
 
+            numbers = re.findall(r'\b\d+\b', result.stdout)
+
             # 필요한 정보를 추출하여 딕셔너리로 변환
             result_dict = {
                 # 'returncode': result.returncode,
-                'stdout': result.stdout,
+                'stdout': numbers,
                 # 'stderr': result.stderr
             }
 

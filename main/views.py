@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from algorithm import sudoku_solver, sudoku_maker
-from imgtoarr import main
+from imgtoarr import main, fuction222
 import subprocess
 
 import json
@@ -25,26 +25,6 @@ def solve_sudoku(request):
         arr = body.get('arr', [])
         result = sudoku_solver.run_cpp_program(arr)
         return JsonResponse({'result': result})
-
-# def img_to_arr(request):
-#     if request.method == "POST":
-#         try:
-#             image_data = request.body
-#             # with open(image_data, 'rb') as f:
-#             #     image_data = f.read()
-#             image_data_decoded = base64.b64decode(image_data)
-#
-#             # image_data_decoded = base64.b64decode(image_data)
-#
-#             # 파일로 저장하여 확인
-#             with open('received_image.png', 'wb') as f:
-#                 f.write(image_data_decoded)
-#             return JsonResponse({'status': 'success'})
-#         except Exception as e:
-#             return JsonResponse({'status': 'error', 'message': str(e)})
-#
-#     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
-
 def img_to_arr(request):
     if request.method == "POST":
         try:

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-import re
 from algorithm import sudoku_solver, sudoku_maker
+from imgtoarr import main
 import subprocess
 
 import json
@@ -64,25 +64,22 @@ def img_to_arr(request):
             # result = subprocess.run(["python", "/Users/zsu/mysite/imgtoarr/main.py"])
             # result = subprocess.run(["python", "imgtoarr/main.py"], capture_output=True, text=True)
             # stdout = subprocess.PIPE, stderr = subprocess.PIPE, text = True
-            result = subprocess.run(["python", "imgtoarr/main.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                    text=True)
-
-            filtered_text = re.sub(r'(Setting UP|1/1 \[=+?\] - ETA: 0s|\.\.\.)', '', result.stdout)
-            # numbers = re.findall(r'\b\d+\b', result.stdout)
-
-            # 필요한 정보를 추출하여 딕셔너리로 변환
-            result_dict = {
-                # 'returncode': result.returncode,
-                'stdout': filtered_text,
-                # 'stderr': result.stderr
-            }
+            # result = subprocess.run(["python", "imgtoarr/main.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            #                         text=True)
+            # # 필요한 정보를 추출하여 딕셔너리로 변환
+            # result_dict = {
+            #     # 'returncode': result.returncode,
+            #     'stdout': result.stdout,
+            #     # 'stderr': result.stderr
+            # }
+            result = main.img_make_arr(file_path)
 
             # 딕셔너리를 JSON으로 변환
-            result_json = json.dumps(result_dict)
+            result_json = json.dumps(result)
             # result = subprocess.run(["python", "/Users/zsu/PycharmProjects/pythonProject2/imgtoarr/main.py"])
 
             # 성공 응답을 반환합니다.
-            return JsonResponse({'status': 'success' , 'result' : result_json})
+            return JsonResponse({'status': 'success', 'result': result_json})
         except Exception as e:
             # 예외가 발생한 경우 에러 응답을 반환합니다.
             return JsonResponse({'status': 'error', 'message': str(e)})

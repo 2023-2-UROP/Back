@@ -42,7 +42,7 @@ def img_to_arr(request):
 
             arr = main.img_make_arr(file_path)
 
-            json_res = json.dumps(arr)
+            json_res = json.dumps(arr.astype(int).tolist())
 
             # 성공 응답을 반환합니다.
             return JsonResponse({'status': 'success', 'result': json_res})

@@ -52,14 +52,20 @@ def img_to_arr(request):
             #     # 'stderr': result.stderr
             # }
             arr = main.img_make_arr(file_path)
-            arr = arr.strip().split("\n")
-            arr = [[int(num) for num in line.split()] for line in arr]
+            if isinstance(arr, list):
+                arr = [line.strip().split() for line in arr]
+                arr = [[int(num) for num in line] for line in arr]
+
+                # 딕셔너리를 JSON으로 변환
+                result_json = json.dumps(arr)
+            # arr = arr.strip().split("\n")
+            # arr = [[int(num) for num in line.split()] for line in arr]
             # 딕셔너리를 JSON으로 변환
 
             # result = subprocess.run(["python", "/Users/zsu/PycharmProjects/pythonProject2/imgtoarr/main.py"])
 
             # 성공 응답을 반환합니다.
-            return JsonResponse({'status': 'success', 'result': arr})
+                return JsonResponse({'status': 'success', 'result': result_json})
         except Exception as e:
             # 예외가 발생한 경우 에러 응답을 반환합니다.
             return JsonResponse({'status': 'error', 'message': str(e)})

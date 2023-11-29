@@ -41,6 +41,7 @@ import os
 import cv2
 import numpy as np
 import tensorflow as tf
+tf.keras.backend.clear_session()
 image_path = 'imgtoarr/sudoku_capture.png'
 # 모델 불러오는 함수
 def intializePredectionModel():

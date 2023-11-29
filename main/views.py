@@ -51,10 +51,12 @@ def img_to_arr(request):
             #     'stdout': result.stdout,
             #     # 'stderr': result.stderr
             # }
-            result = main.img_make_arr(file_path)
-
+            arr = main.img_make_arr(file_path)
+            arr = arr.strip().split("\n")
+            arr = [[int(num) for num in line.split()] for line in arr]
             # 딕셔너리를 JSON으로 변환
-            result_json = json.dumps(result)
+            result_json = json.dumps(arr)
+
             # result = subprocess.run(["python", "/Users/zsu/PycharmProjects/pythonProject2/imgtoarr/main.py"])
 
             # 성공 응답을 반환합니다.

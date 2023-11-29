@@ -63,7 +63,7 @@ def img_to_arr(request):
             # 파일 저장이 완료되면 main.py를 실행합니다.
             # result = subprocess.run(["python", "/Users/zsu/mysite/imgtoarr/main.py"])
             # result = subprocess.run(["python", "imgtoarr/main.py"], capture_output=True, text=True)
-            stdout = subprocess.PIPE, stderr = subprocess.PIPE, text = True
+            # stdout = subprocess.PIPE, stderr = subprocess.PIPE, text = True
             result = subprocess.run(["python", "imgtoarr/main.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                     text=True)
             # numbers = re.findall(r'\b\d+\b', result.stdout)

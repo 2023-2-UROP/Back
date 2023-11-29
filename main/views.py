@@ -41,8 +41,7 @@ def img_to_arr(request):
                     destination.write(chunk)
 
             arr = main.img_make_arr(file_path)
-            arr_list = arr.tolist()
-            arr_list_int = [int(x) for x in arr_list]
+            arr_list_int = [int(x) for x in arr]
 
             # json_res = json.dumps(arr.astype(int).tolist())
 

@@ -41,9 +41,9 @@ def img_to_arr(request):
                     destination.write(chunk)
 
             arr = main.img_make_arr(file_path)
-            # arr_list_int = [int(x) for x in arr]
+            arr_list_int = [int(x) for x in arr]
             # arr = arr.strip().split("\n")
-            arr = [[int(num) for num in line.split()] for line in arr]
+            arr = [[int(num) for num in line.split()] for line in arr_list_int]
             return JsonResponse({'arr': arr})
         except Exception as e:
             # 예외가 발생한 경우 에러 응답을 반환합니다.

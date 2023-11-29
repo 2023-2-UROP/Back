@@ -66,12 +66,14 @@ def img_to_arr(request):
             # stdout = subprocess.PIPE, stderr = subprocess.PIPE, text = True
             result = subprocess.run(["python", "imgtoarr/main.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                     text=True)
+
+            filtered_text = re.sub(r'(Setting UP|1/1 \[=+?\] - ETA: 0s|\.\.\.)', '', result.stdout)
             # numbers = re.findall(r'\b\d+\b', result.stdout)
 
             # 필요한 정보를 추출하여 딕셔너리로 변환
             result_dict = {
                 # 'returncode': result.returncode,
-                'stdout': result.stdout,
+                'stdout': filtered_text,
                 # 'stderr': result.stderr
             }
 

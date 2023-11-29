@@ -55,12 +55,11 @@ def img_to_arr(request):
             arr = arr.strip().split("\n")
             arr = [[int(num) for num in line.split()] for line in arr]
             # 딕셔너리를 JSON으로 변환
-            result_json = json.dumps(arr)
 
             # result = subprocess.run(["python", "/Users/zsu/PycharmProjects/pythonProject2/imgtoarr/main.py"])
 
             # 성공 응답을 반환합니다.
-            return JsonResponse({'status': 'success', 'result': result_json})
+            return JsonResponse({'status': 'success', 'result': arr})
         except Exception as e:
             # 예외가 발생한 경우 에러 응답을 반환합니다.
             return JsonResponse({'status': 'error', 'message': str(e)})

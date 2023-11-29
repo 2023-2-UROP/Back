@@ -1,3 +1,4 @@
+import numpy as np
 from django.shortcuts import render
 from django.http import JsonResponse
 from algorithm import sudoku_solver, sudoku_maker
@@ -52,8 +53,8 @@ def img_to_arr(request):
             #     # 'stderr': result.stderr
             # }
             arr = main.img_make_arr(file_path)
-            if isinstance(arr, list):
-                arr = [line.strip().split() for line in arr]
+            if isinstance(arr, np.ndarray):
+                arr = [str(item).strip().split() for item in arr]
                 arr = [[int(num) for num in line] for line in arr]
 
                 # 딕셔너리를 JSON으로 변환

@@ -42,8 +42,7 @@ def img_to_arr(request):
 
             arr = main.img_make_arr(file_path)
             arr_list_int = [int(x) for x in arr]
-            # arr = arr.strip().split("\n")
-            # arr = [[int(num) for num in line.split()] for line in arr_list_int]
+            arr_list_int = [arr_list_int[i:i + 9] for i in range(0, len(arr_list_int), 9)]
             return JsonResponse({'arr': arr_list_int})
         except Exception as e:
             # 예외가 발생한 경우 에러 응답을 반환합니다.
